@@ -1,0 +1,28 @@
+{
+  "name": "gamesync",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/ryukgod26/GameSync#readme",
+  "bugs": {
+    "url": "https://github.com/ryukgod26/GameSync/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryukgod26/GameSync.git"
+  },
+  "license": "ISC",
+  "author": "Eklavya",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
