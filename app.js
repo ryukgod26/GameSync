@@ -1,19 +1,24 @@
-const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const PORT = 4000;
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import gamesApi from './routes/api/games.js';
+import usersApi from './routes/api/users.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
+const app = express();
+const PORT = 4000;
+
 mongoose.connect(process.env.MONGO_URI,{}).then(console.log("Connected"))
 	.catch((err)=>console.log(`Error Connecting to Database\n Error:${err}`));
 
-const gamesApi = require('./routes/api/games');
-const usersApi = require('./routes/api/users');
+//const gamesApi = require('./routes/api/games');
+//const usersApi = require('./routes/api/users');
 
+app.use(bodyParser.json());
 
-app.use('/',gamesApi);
-app.use('/',usersApi);
+app.use('/games',gamesApi);
+app.use('/users',usersApi);
 
 
 

@@ -12,10 +12,12 @@
   },
   "license": "ISC",
   "author": "Eklavya",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed":"node Utils/seeder.js",
+    "seed:destroy":"node Utils/seeder.js -d"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
