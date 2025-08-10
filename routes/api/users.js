@@ -16,7 +16,7 @@ res.send(usernames + '\n');
 
 });
 
-router.get('/:username/', async(req,res)=>{
+router.get('/search/:username/', async(req,res)=>{
 
 const {username} = req.params;
 try{
@@ -86,8 +86,8 @@ const isPassMatched = await bcrypt.compare(password,user.password);
 if(!isPassMatched){
 res.json({'message':'Wrong Password.'});
 }
-
-const userPayload = {id : user.id,username:user.username};
+const now = new Date();
+const userPayload = {id : user.id,username:user.username,issuedAt:now};
 const jwtToken = jwt.sign(userPayload,process.env.JWT_SECRET_KEY,{expiresIn:'30min'});
 res.json({jwtToken});
 }
@@ -99,10 +99,11 @@ res.status(500).json({'message':'Internal Server Error.'});
 
 });
 
-router.post('/me/',authenticateToken,(req,res)=>{
+router.get('/me/',authenticateToken,async (req,res)=>{
 
 const payload = req.user;
-const user = User.findOne({id:payload.id});
+console.log(payload);
+const user = await User.findById(payload.id);
 console.log("test");
 const details= {
 'username':user.username,
