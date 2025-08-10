@@ -101,9 +101,10 @@ res.status(500).json({'message':'Internal Server Error.'});
 
 router.post('/me/',authenticateToken,(req,res)=>{
 
-user = req.user;
+const payload = req.user;
+const user = User.findOne({id:payload.id});
 console.log("test");
-res.json({
+const details= {
 'username':user.username,
 'name':user.name,
 'email':user.email,
@@ -111,9 +112,11 @@ res.json({
 "Games Playing" : user.gamesPlaying,
 "Games Dropped" : user.gamesDropped,
 "Number of Followers" : user.followersCount,
-"Number of Following":user.followingCount,
+"Number of Following":user.followingCount
 
-});
+};
+console.log(details);
+res.json(details);
 
 });
 

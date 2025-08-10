@@ -7,14 +7,14 @@ import jwt from 'jsonwebtoken';
 function authenticateToken(req,res,next){
 //Getting the Auth Header
 console.log("test");
-const authHeader = req.header['authorization'];
+const authHeader = req.headers['authorization'];
 //if(!authHeader){
 //return res.json({'message':'Please Log In First'});
 
 //}
 //checking if authHeader is null and if not split it ans get the token.
 console.log(authHeader);
-const token = authHeader && authHeader.split(' ')[1];
+const token = authHeader && authHeader.split(' ')[0];
 
 //Checking if token is null.
 if(token == null){
