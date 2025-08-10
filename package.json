@@ -16,13 +16,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed":"node Utils/seeder.js",
-    "seed:destroy":"node Utils/seeder.js -d"
+    "seed": "node Utils/seeder.js",
+    "seed:destroy": "node Utils/seeder.js -d"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"

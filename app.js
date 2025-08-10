@@ -12,10 +12,9 @@ const PORT = 4000;
 mongoose.connect(process.env.MONGO_URI,{}).then(console.log("Connected"))
 	.catch((err)=>console.log(`Error Connecting to Database\n Error:${err}`));
 
-//const gamesApi = require('./routes/api/games');
-//const usersApi = require('./routes/api/users');
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 app.use('/games',gamesApi);
 app.use('/users',usersApi);

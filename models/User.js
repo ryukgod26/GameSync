@@ -27,24 +27,47 @@ const userSchema = new mongoose.Schema({
 	},
 	gamesCompleted:[{
 	type:mongoose.Schema.Types.ObjectId,
-	ref:'game'
+	ref:'Game'
 	}],
 	gamesPlaying:{
 	type:mongoose.Schema.Types.ObjectId,
-        ref:'game'
+        ref:'Game'
 	},
 	gamesDropped:{
 	type:mongoose.Schema.Types.ObjectId,
-        ref:'game'
-	}
+        ref:'Game'
+	},
+	followers:[{
+	type:mongoose.Schema.Types.ObjectId,
+	ref:'User'
+	}],
+	following:[{
+	type:mongoose.Schema.Types.ObjectId,
+	ref:'User'
+	}]
 },
 	{
+	toJSON:{virtuals:true},
+	toObject:{virtuals:true},
 	timestamps:true
 	}
 	
 
 );
 
+
+
+userSchema.virtual('followersCount').get(function(){
+
+return this.followers.length;
+
+});
+
+userSchema.virtual('followingCount').get(function(){
+
+return this.following.length;
+
+});
 
 // I learned how to do hashing from Ai but code is written by me.
 // I just got to know i cannot use arrow functions in this middleware after getting an error
