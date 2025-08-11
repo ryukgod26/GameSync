@@ -146,7 +146,7 @@ res.json(details);
 
 });
 
-router.delete('/:username/follow/',authenticateToken,async (req,res)=>{
+router.delete('/:username/unfollow/',authenticateToken,async (req,res)=>{
 const {username} = req.params;
 const currentUserId = req.user.id;
 
