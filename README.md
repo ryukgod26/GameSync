@@ -4,16 +4,16 @@ This is a small project created by me.This is a robust backend Api for gamers.Th
 ---
 
 ## Tabel of Contents
--[About the Project](#about-the-project)
--[Key Features](#key-features)
--[Built With](#built-with)
--[Getting Started](#getting-started)
-    -[Installation](#installation)
--[API Endpoints](#api-endpoints)
-    -[Authentication](#authentication)
-    -[Users and Profiles](#user-profiles)
-    -[Followers and Following](#followers-following)
--[Error Handling](#error-handling)
+- [About the Project](#about-the-project)
+- [Key Features](#key-features)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+    - [Installation](#installation)
+- [API Endpoints](#api-endpoints)
+    - [Authentication](#authentication)
+    - [Users and Profiles](#user-profiles)
+    - [Followers and Following](#followers-following)
+- [Error Handling](#error-handling)
 
 ---
 
@@ -38,7 +38,7 @@ This Api provides the core Infrastructure for a social Application or website fo
 -   [MongoDB](https://www.mongodb.com/) 
 -   [Mongoose](https://mongoosejs.com/)
 -   [JSON Web Token (jsonwebtoken)](https://github.com/auth0/node-jsonwebtoken) 
--   [bcryptjs](https://github.com/dcodeI0 /bcrypt.js)
+-   [bcryptjs](https://github.com/dcodeI0/bcrypt.js)
 
 ---
 
@@ -48,23 +48,24 @@ To Run this Api on your Local Machine, Follow these Steps
 
 ### Installation
 
-1.** Clone the repository:** ``` sh
+1.  **Clone the repository** ``` sh
  git clone [https://github.com/ryukgod26/GameSync.git](https://github.com/ryukgod26/GameSync.git)
 ```
- Make Sure you have mongodb running locally or on cloud and node version (24.5.0) or later installed.
-2.**Navigate into Project Folder:** ```sh cd GameSync```
-3.**Install npm Packages:** ``` sh
+2.  **Navigate into Project Folder**```sh 
+cd GameSync
+```
+3.  **Install npm Packages** ``` sh
 npm install
 ```
-4.**Create a .env File:** Go to root directory of the Project and create a new .env file.
-5.**Configuring .env file:** ``` env 
+4.  **Create a .env File:** Go to root directory of the Project and create a new .env file.
+5.  **Configuring .env file:** ``` env 
 MONGO_URI = <Your Mongodv Database URI>
 JWT_SECRET_KEY = <Your Jwt Secret Key>
 ```
-5.**Start the server:** For Development``` sh
+6.  **Start the server(for Development):** For Development``` sh
 nodemon
 ```
-For Production ``` sh
+7.  **Start the server (For Production)** ``` sh
 node app.js
 ```
 
