@@ -79,19 +79,76 @@ node app.js
 
 ## API Endpoints
 
-### Unauthenticated Routea
-These are Api Endpoints which are using Get and Post method and can be accesed without authenticating.
-GET [https://gamesync-vui5.onrender.com/](https://gamesync-vui5.onrender.com)
-GET [https://gamesync-vui5.onrender.com/users/](https://gamesync-vui5.onrender.com/users/)
-GET [https://gamesync-vui5.onrender.com/games/](https://gamesync-vui5.onrender.com)
-GET [https://gamesync-vui5.onrender.com/search/:username/](https://gamesync-vui5.onrender.com)
-GET [https://gamesync-vui5.onrender.com/game/](https://gamesync-vui5.onrender.com/game/)
-POST [https://gamesync-vui5.onrender.com/login/](https://gamesync-vui5.onrender.com/login/)
-POST [https://gamesync-vui5.onrender.com/reguster/](https://gamesync-vui5.onrender.com/register/)
+### Unauthenticated Routes
+Public endpoints that do not require authentication.
+
+- GET https://gamesync-vui5.onrender.com/
+    - Description: Plain text description of the API.
+
+- GET https://gamesync-vui5.onrender.com/users/
+    - Description: Returns an array of all usernames.
+    - Response: ["user1", "user2", ...]
+
+- GET https://gamesync-vui5.onrender.com/users/search/:username/
+    - Path params: username (string)
+    - Description: Basic profile info for a user.
+    - Success response: { name, username, "Games Completed": [ids], followersCount, followingCount }
+    - 404 when user not found.
+
+- POST https://gamesync-vui5.onrender.com/users/register/
+    - Body: { username, name, email, password } (password must be at least 6 chars)
+    - Success: 201 { message: "User Saved Successfully." }
+    - Errors: 409 if email/username exists. validation message if fields missing.
+
+- POST https://gamesync-vui5.onrender.com/users/login/
+    - Body: { username, password }
+    - Success: { jwtToken } (expires in ~30 minutes)
+    - Errors: messages for wrong username/password.
+
+- GET https://gamesync-vui5.onrender.com/games/
+    - Description: Returns an array of all game titles.
+    - Response: ["Halo", "Elden Ring", ...]
+
+- GET https://gamesync-vui5.onrender.com/games/game/?genre=... OR ?title=...
+    - Query (case-insensitive): genre (string) to get an array of games, or title (string) to get a single game object.
+    - Response: genre -> Game[], title -> Game | null
 
 
 ### AUTHENTICATED ROUTES
-These are all the other routes of the Api.They need user to be authenticated first. You will need to set the ***Authonicator*** header of the request equal to the jwt token you get after logging in.
-GET [https://gamesync-vui5.onrender.com/profile/](https://gamesync-vui5.onrender.com/profile/)
+These endpoints require a valid JWT. It means you have to login first before you can access these routes.
+
+- Authorization header: set to your raw JWT token (no "Bearer " prefix). Note: the current middleware expects the token value directly.
+
+- GET https://gamesync-vui5.onrender.com/users/profile/
+    - Description: Returns the authenticated user's profile.
+    - Response fields: username, name, email, "Games Completed", "Games Playing", "Games Dropped", "Number of Followers", "Number of Following".
+
+- POST https://gamesync-vui5.onrender.com/users/:username/follow/
+    - Path params: username (string)
+    - Description: Follow another user on the platform.
+
+- DELETE https://gamesync-vui5.onrender.com/users/:username/unfollow/
+    - Path params: username (string)
+    - Description: Unfollow another user on the platform.
+
+- GET https://gamesync-vui5.onrender.com/users/profile/followers/
+    - Description: List of your followers' usernames.
+    - Response: { "Usernames of followers": ["alice", "bob", ...] }
+
+- GET https://gamesync-vui5.onrender.com/users/profile/following/
+    - Description: List of usernames you are following.
+    - Response: { "Usernames of following": ["carol", ...] }
+
+- PUT https://gamesync-vui5.onrender.com/games/add/gamesCompleted/
+    - Body: { title } (string; case-insensitive match)
+    - Description: Adds the game to your "Games Completed" list. Removes it from "Games Playing" and "Games Dropped" if present.
+
+- PUT https://gamesync-vui5.onrender.com/games/add/gamesPlaying/
+    - Body: { title } (string; case-insensitive match)
+    - Description: Adds the game to your "Games Playing" list. Removes it from "Games Completed" and "Games Dropped" if present.
+
+- DELETE https://gamesync-vui5.onrender.com/games/delete/gamesDropped/:title
+    - Path params: title (string; case-insensitive match)
+    - Description: Adds the game to your "Games Dropped" list. Also removes it from "Games Playing" and "Games Completed" if present. Note: despite using the DELETE method, this route acts as a move-to-dropped operation.
 
 
