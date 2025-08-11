@@ -21,14 +21,14 @@ app.use('/users',usersApi);
 
 
 
-app.use('/',(req,res)=>{
+app.get('/',(req,res)=>{
 
 let message = "This is a small project created by me.This is a robust backend Api for gamers.They can add games in their profiles in different catofries like Games they have Completed, Games They are Playing and Games they have Dropped. This Project as the Complete Server side logic for the Application.You can Easily build apps or Websites with this Api.(One more Thing I have never Wrote a Readme File before So Please Igmore mistakes in Readme File).Visit https://github.com/ryukgod26/GameSync.git For more Info."
 	res.json({"message":message});
 
 });
 
-app.use('/health/',(req,res)=>{
+app.get('/health/',(req,res)=>{
 
 res.status(200).send("OK");
 
