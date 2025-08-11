@@ -100,7 +100,7 @@ res.status(500).json({'message':'Internal Server Error.'});
 
 });
 
-router.get('/me/',authenticateToken,async (req,res)=>{
+router.get('/profile/',authenticateToken,async (req,res)=>{
 
 const payload = req.user;
 //console.log(payload);
@@ -241,7 +241,7 @@ return res.json({
 });
 
 
-router.get('/me/followers/',authenticateToken, async (req,res)=>{
+router.get('/profile/followers/',authenticateToken, async (req,res)=>{
 
 const userId = req.user.id;
 
@@ -263,7 +263,7 @@ res.json({"Usernames of followers" : followersUsernames});
 });
 
 
-router.get('/me/following/',authenticateToken, async (req,res)=>{
+router.get('/profile/following/',authenticateToken, async (req,res)=>{
 
 const userId = req.user.id;
 

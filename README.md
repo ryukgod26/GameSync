@@ -10,6 +10,7 @@ This is a small project created by me.This is a robust backend Api for gamers.Th
 - [Getting Started](#getting-started)
     - [Installation](#installation)
 - [API Endpoints](#api-endpoints)
+    - [Unauthenticated Routes](#unauthenticated-routes)
     - [Authentication](#authentication)
     - [Users and Profiles](#user-profiles)
     - [Followers and Following](#followers-following)
@@ -74,4 +75,23 @@ nodemon
 ``` sh
 node app.js
 ```
+---
+
+## API Endpoints
+
+### Unauthenticated Routea
+These are Api Endpoints which are using Get and Post method and can be accesed without authenticating.
+GET [https://gamesync-vui5.onrender.com/](https://gamesync-vui5.onrender.com)
+GET [https://gamesync-vui5.onrender.com/users/](https://gamesync-vui5.onrender.com/users/)
+GET [https://gamesync-vui5.onrender.com/games/](https://gamesync-vui5.onrender.com)
+GET [https://gamesync-vui5.onrender.com/search/:username/](https://gamesync-vui5.onrender.com)
+GET [https://gamesync-vui5.onrender.com/game/](https://gamesync-vui5.onrender.com/game/)
+POST [https://gamesync-vui5.onrender.com/login/](https://gamesync-vui5.onrender.com/login/)
+POST [https://gamesync-vui5.onrender.com/reguster/](https://gamesync-vui5.onrender.com/register/)
+
+
+### AUTHENTICATED ROUTES
+These are all the other routes of the Api.They need user to be authenticated first. You will need to set the ***Authonicator*** header of the request equal to the jwt token you get after logging in.
+GET [https://gamesync-vui5.onrender.com/profile/](https://gamesync-vui5.onrender.com/profile/)
+
 
