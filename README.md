@@ -48,24 +48,30 @@ To Run this Api on your Local Machine, Follow these Steps
 
 ### Installation
 
-1.  **Clone the repository** ``` sh
+1.  **Clone the repository** 
+``` sh
  git clone [https://github.com/ryukgod26/GameSync.git](https://github.com/ryukgod26/GameSync.git)
 ```
-2.  **Navigate into Project Folder**```sh 
+2.  **Navigate into Project Folder**
+```sh 
 cd GameSync
 ```
-3.  **Install npm Packages** ``` sh
+3.  **Install npm Packages** 
+``` sh
 npm install
 ```
 4.  **Create a .env File:** Go to root directory of the Project and create a new .env file.
-5.  **Configuring .env file:** ``` env 
+5.  **Configuring .env file:** 
+``` env 
 MONGO_URI = <Your Mongodv Database URI>
 JWT_SECRET_KEY = <Your Jwt Secret Key>
 ```
-6.  **Start the server(for Development):** For Development``` sh
+6.  **Start the server(for Development):** For Development
+``` sh
 nodemon
 ```
-7.  **Start the server (For Production)** ``` sh
+7.  **Start the server (For Production)** 
+``` sh
 node app.js
 ```
 
