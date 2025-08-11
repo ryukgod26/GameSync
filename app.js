@@ -21,12 +21,20 @@ app.use('/users',usersApi);
 
 
 
-app.use('/',(req,res)=>{
+app.get('/',(req,res)=>{
 
-let message = "This is a Api created to store your and view others gaming information or status. Like what game are they playing and which games have they completed. You can also post reviews on games You have Played and view other people reviews."
-	res.send(message);
+let message = "This is a small project created by me.This is a robust backend Api for gamers.They can add games in their profiles in different catofries like Games they have Completed, Games They are Playing and Games they have Dropped. This Project as the Complete Server side logic for the Application.You can Easily build apps or Websites with this Api.(One more Thing I have never Wrote a Readme File before So Please Igmore mistakes in Readme File).Visit https://github.com/ryukgod26/GameSync.git For more Info."
+	res.json({"message":message});
 
 });
+
+app.get('/health/',(req,res)=>{
+
+res.status(200).send("OK");
+
+});
+
+
 app.listen(PORT,()=>{
 
 console.log(`Server is Listening on Port: ${PORT}`);
