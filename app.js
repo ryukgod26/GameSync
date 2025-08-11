@@ -27,6 +27,14 @@ let message = "This is a small project created by me.This is a robust backend Ap
 	res.json({"message":message});
 
 });
+
+app.use('/health/',(req,res)=>{
+
+res.status(200).send("OK");
+
+});
+
+
 app.listen(PORT,()=>{
 
 console.log(`Server is Listening on Port: ${PORT}`);
