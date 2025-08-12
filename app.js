@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import gamesApi from './routes/api/games.js';
 import usersApi from './routes/api/users.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,10 @@ mongoose.connect(process.env.MONGO_URI,{}).then(console.log("Connected"))
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+//!!Important!!
+// Remove this line of code when Using this Api in your Application or add cors options 
+app.use(cors());
 
 app.use('/games',gamesApi);
 app.use('/users',usersApi);
