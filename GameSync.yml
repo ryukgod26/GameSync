@@ -1,11 +1,28 @@
 openapi: '3.0.3'
 info:
-  title: API Title
+  title: GameSync API
   version: '1.0'
 servers:
-  - url: https://api.server.test/v1
+  - url: https://gamesync-vui5.onrender.com
 paths:
-  /test:
+  /:
+    get:
+      responses:
+        '200':
+          description: Basic Information about the Api.
+  /users:
+    get:
+      responses:
+        '200':
+          description: Returns an Array of the usernames of all the users on the Platform.
+  /games:
+    get:
+      responses:
+        '200':
+          description: Returns an Array of the all the games on the platform.
+  
+
+  /health:
     get:
       responses:
         '200':
