@@ -5,25 +5,293 @@ info:
 servers:
   - url: https://gamesync-vui5.onrender.com
 paths:
+# --- This is a Unauthenticated Route (no 'jwt' token needed in the header) ---
   /:
     get:
-      responses:
-        '200':
-          description: Basic Information about the Api.
+     responses:
+      '200':
+        description: Basic Information about the Api.
+     tags:
+      - Public
+     summary: Basic Information About the Api.
+    
+  /users/register/:
+    post:
+        tags:
+        - Public
+        summary: Register a new User in the Database
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [username, name, email, password]
+                properties:
+                  username:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                    minLength: 6
+              example:
+                username: test3
+                name: John Wick
+                email: test@example.com
+                password: secret1234
+        responses:
+          '200':
+           description: User has been Registered Successfully.  
+  /users/login/:
+    post:
+        tags:
+        - Public
+        summary: Login a User and return the jwt Token.
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [username, password]
+                properties:
+                  username:
+                    type: string
+                  password:
+                    type: string
+              example:
+                username: new
+                password: new124
+        responses:
+          '200':
+           description: JWt Token If login is suuceess.
+
   /users:
     get:
+      tags:
+        - Public
+      summary: All the Users on the Platform.
       responses:
         '200':
           description: Returns an Array of the usernames of all the users on the Platform.
-  /games:
+  
+  /users/search/{username}:
     get:
+      tags:
+        - Public
+      summary: Search for a specific user on the Platform by username
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Username to search about a user
       responses:
         '200':
-          description: Returns an Array of the all the games on the platform.
+          description: Basic profile info of the user
+        '404':
+          description: User not found
   
+  /users/{username}/unfollow/:
+    delete:
+      tags:
+        - Authenticated
+      summary: Unfollow another user on the platform.
+      security:
+        - JwtAuth: []
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Username to unfollow
+      responses:
+        '200':
+          description: Unfollowed the user
+  
+  /users/{username}/follow/:
+    post:
+      tags:
+        - Authenticated
+      summary: Follow another user on the platform.
+      security:
+        - JwtAuth: []
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Username to follow
+      responses:
+        '200':
+          description: Now following the user
+  
+  /users/profile/followers/:
+    get:
+      tags:
+        - Authenticated
+      summary: List of your usernames of users following you.
+      security:
+        - JwtAuth: []
+      responses:
+        '200':
+          description: List of followers usernames
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "Usernames of followers":
+                    type: array
+                    items:
+                      type: string
+  
+  /users/profile/following/:
+    get:
+      tags:
+        - Authenticated
+      summary: List of usernames you are following.
+      security:
+        - JwtAuth: []
+      responses:
+        '200':
+          description: List of usernames you are following
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "Usernames of following":
+                    type: array
+                    items:
+                      type: string
+  
+  /users/profile/:
+    get:
+      tags:
+        - Authenticated
+      summary: Get the authenticated user's profile details like name,username and number of followers
+      security:
+        - JwtAuth: []
+      responses:
+        '200':
+          description: Profile details of the user
+  
+  /games:
+    get:
+      tags:
+        - Public
+      summary: All game titles
+      responses:
+        '200':
+          description: Returns an array of all the games on the platform.
+
+  /games/game/:
+    get:
+      tags:
+        - Public
+      summary: Search games by genre or title (case-insensitive)
+      parameters:
+        - in: query
+          name: genre
+          schema:
+            type: string
+          description: Returns an array of games matching the genre
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Returns a single game matching the title
+      responses:
+        '200':
+          description: Array of games (for genre) or single game (for title)
+
+  /games/add/gamesCompleted/:
+    put:
+      tags:
+        - Authenticated
+      summary: Add a game to your "Games Completed" list
+      security:
+        - JwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+      responses:
+        '200':
+          description: Game moved/added to games completed list
+        '401':
+          description: Unauthorized or Game is not added to the list.
+
+  /games/add/gamesPlaying/:
+    put:
+      tags:
+        - Authenticated
+      summary: Add a game to your Games Playing list
+      security:
+        - JwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+      responses:
+        '200':
+          description: Game moved/added to games playing list.
+
+  /games/add/gamesDropped/:
+    delete:
+      tags:
+        - Authenticated
+      summary: Add a game to your Games Dropped list and removes them from other lists
+      security:
+        - JwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+      responses:
+        '200':
+          description: Game moved/added to games dropped list.     
 
   /health:
     get:
+      tags:
+        - Public
+      summary: Health check
       responses:
         '200':
           description: OK
+
+
+# --- Components Section ---
+components:
+  securitySchemes:
+    JwtAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: Enter your raw JWT token (no "Bearer " prefix)
