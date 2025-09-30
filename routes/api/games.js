@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Game from '../../models/Game.js'
 import authenticateToken from './authenticateToken.js';
 import User from '../../models/User.js';
+import Review from '../../models/Review.js';
 
 const router = express.Router();
 
@@ -262,4 +263,58 @@ await User.updateOne(
 );
 res.json({'message': message + `Game ${title} has been added to your games Dropped list.`});
 });
+
+
+router.get('/:gameTitle/reviews/', async (req,res)=>{
+
+const {gameTitle} = req.params;
+console.log(`${gameTitle}`);
+const title = await Game.findOne({title:{$regex:gameTitle,$options:'i'}});
+const reviews = await Review.find({game:title.id});
+res.json({'message':`Reviews of ${title.id} will be Displayed Here.
+Reviews are ${reviews}
+`});
+
+
+});
+
+router.post('/:gameTitle/reviews/',authenticateToken,async (req,res)=>{
+try{
+const {gameTitle} = req.params;
+gameTitle = await Game.findOne({title:{$regex:gameTitle,$options:'i'}});
+gameId = gameTitle.id;
+const {rating,reviewText} = req.body;
+const userId = req.user.id;
+const existingReview = await Review.findOne(
+	{
+	game:gameId,
+	user:userId
+	});
+
+if(exitsingReview){
+res.status(400).json({
+'message':'You Have Already Reviewed the Game.Plaese Delete Your Previous Review to create a New One'
+});
+}
+
+const review = await Review.create({
+rating,
+reviewText,
+game:gameId,
+user:userId
+
+});
+res.status(201).json(review);
+
+}
+catch(error){
+console.error(error);
+res.status(500).json({'message':'Server Error Ocvured.'});
+}
+
+});
+
+
+
+
 export default router;
